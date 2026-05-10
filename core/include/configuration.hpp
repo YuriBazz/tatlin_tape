@@ -2,10 +2,10 @@
 // Created by george on 09.05.2026.
 //
 #pragma once
-#include <string>
-#include <fstream>
 #include "../../libs/json.hpp"
 #include "../include/exceptions.hpp"
+#include <chrono>
+#include <fstream>
 
 namespace  utils {
     namespace fs =  std::filesystem;
@@ -13,32 +13,25 @@ namespace  utils {
  * @brief Configuration object for a tape processor
  */
 struct configuration {
-    fs::path tape_path;
-    size_t reading_delay;
-    size_t writing_delay;
-    size_t shift_delay;
-    size_t rewind_delay;
-
-
-
-    configuration(const configuration &);
-    configuration(configuration &&) noexcept;
-    configuration &operator=(const configuration &);
-    configuration &operator=(configuration &&) noexcept;
-    ~configuration() = default;
-
+    std::chrono::microseconds reading_delay{0};
+    std::chrono::microseconds writing_delay{0};
+    std::chrono::microseconds shift_delay{0};
+    std::chrono::microseconds rewind_delay{0};
 
     /**
      *
-     * @param tape_path Path to the tape file
      * @param configuration_path Path to the zeros.json file
      * @throws utils::configuration_error If something went wrong with the zeros.json file
      */
-    explicit configuration(fs::path &&tape_path, fs::path &&configuration_path = "");
-private:
-    void swap(configuration &) noexcept;
+    configuration(fs::path &&configuration_path);
+
     configuration() = default;
+    ~configuration() = default;
+    configuration(const configuration &) = default;
+    configuration(configuration &&) = default;
+    configuration &operator=(const configuration &) = default;
+    configuration &operator=(configuration &&) = default;
 };
 
+extern configuration global_configuration;
 }
-

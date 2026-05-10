@@ -16,11 +16,11 @@ class sorter {
     // work, temp1, temp2
     static void sort(tp& f1, tp& f2, tp& f3);
     static void write_from_ram(ram &mem, tp &f);
-    static void write_buckets();
+    static void write_buckets(tp &f1, tp &f2, tp &f3);
+    static void read_to_ram(tp &f1, tp &f2, tp &f3, ram &mem, size_t count);
 
 public:
     static size_t RAM_SIZE;
-    template <class T = int>
     static void sort(tp& src, tp& dst);
 };
 

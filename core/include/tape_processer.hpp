@@ -18,21 +18,21 @@ namespace utils {
 class tape_processer {
     friend sorter;
     std::fstream tape_file_;
-    std::chrono::milliseconds reading_delay_;
-    std::chrono::milliseconds writing_delay_;
-    std::chrono::milliseconds shift_delay_;
-    std::chrono::milliseconds rewind_delay_;
 
     tape_processer() = default;
 
     void swap(tape_processer &other) noexcept;
+    static constexpr std::streamoff offset = sizeof(int);
+    size_t size_ = 0;
+
+    void size();
 
 public:
     /**
      * @brief Constructs a processor with a given configuration
      * @param configuration configuration struct
      */
-    tape_processer(const configuration& configuration);
+    tape_processer(fs::path &&tape_path);
 
     tape_processer(const tape_processer &) = delete;
     /**
@@ -83,7 +83,6 @@ public:
 
     void shift_forward();
     void shift_backward();
-
 
 };
 
