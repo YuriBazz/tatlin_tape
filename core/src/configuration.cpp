@@ -6,13 +6,11 @@
 
 utils::configuration utils::global_configuration;
 
-utils::configuration::configuration(fs::path &&configuration_path) :
-    reading_delay(0),
-    writing_delay(0), shift_delay(0), rewind_delay(0) {
+utils::configuration::configuration(fs::path &&configuration_path) {
     using json = nlohmann::json;
     if (configuration_path.empty()) return;
     try {
-        json config = json::parse(std::fstream(std::move(configuration_path)));
+        json config = json::parse(std::fstream(configuration_path));
         if (config.size() > 4)
             throw std::runtime_error("Too much fields in config.json");
         uint8_t fields = 0;

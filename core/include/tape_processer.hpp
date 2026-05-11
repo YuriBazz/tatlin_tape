@@ -16,23 +16,16 @@ namespace utils {
  * @note Warp above the std::fstream
  */
 class tape_processer {
-    friend sorter;
     std::fstream tape_file_;
 
     tape_processer() = default;
 
     void swap(tape_processer &other) noexcept;
     static constexpr std::streamoff offset = sizeof(int);
-    size_t size_ = 0;
 
-    void size();
 
 public:
-    /**
-     * @brief Constructs a processor with a given configuration
-     * @param configuration configuration struct
-     */
-    tape_processer(fs::path &&tape_path);
+    tape_processer(const fs::path& tape_path);
 
     tape_processer(const tape_processer &) = delete;
     /**

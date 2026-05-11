@@ -10,11 +10,13 @@ target_sources(tatlin_tape_tests
         ../core/src/exceptions.cpp
         ../core/src/tempfile.cpp
         ../core/src/tape_processer.cpp
+        ../core/src/sorter.cpp
         #############
         ../core/include/tape_processer.hpp
         ../core/include/configuration.hpp
         ../core/include/exceptions.hpp
         ../core/include/tempfile.hpp
+        ../core/include/sorter.hpp
         ../libs/simple_test.h
 )
 

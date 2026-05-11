@@ -5,30 +5,20 @@
 #include "../include/tape_processer.hpp"
 void utils::tape_processer::swap(tape_processer& other) noexcept {
     std::swap(tape_file_, other.tape_file_);
-    std::swap(size_, other.size_);
 }
 
-void utils::tape_processer::size() {
-    int val;
-    while (read(val)) {
-        size_++;
-        shift_forward();
-    }
-    rewind();
-}
 
-utils::tape_processer::tape_processer(fs::path &&tape_path) {
+utils::tape_processer::tape_processer(const fs::path& tape_path) {
     if (!fs::exists(tape_path)) {
         std::fstream creating(tape_path, std::ios::out);
         // потому что по умолчанию оно вроде как не создается, что странно
     }
-    tape_file_ = std::fstream(std::move(tape_path), std::ios::in | std::ios::out | std::ios::binary);
+    tape_file_ = std::fstream(tape_path, std::ios::in | std::ios::out | std::ios::binary);
     if (!tape_file_.is_open()) throw std::runtime_error("Could not open the file");
-    size();
 }
 
 utils::tape_processer::tape_processer(tape_processer&& other) noexcept:
-    tape_file_(std::move(other.tape_file_)), size_(other.size_) {}
+    tape_file_(std::move(other.tape_file_)) {}
 
 utils::tape_processer& utils::tape_processer::operator=(tape_processer&& other) noexcept {
     if (&other == this) return *this;

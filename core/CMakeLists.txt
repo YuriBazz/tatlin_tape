@@ -10,11 +10,13 @@ target_sources(tatlin_tape_core
         src/exceptions.cpp
         src/tempfile.cpp
         src/tape_processer.cpp
+        src/sorter.cpp
         #############
         include/tape_processer.hpp
         include/configuration.hpp
         include/exceptions.hpp
         include/tempfile.hpp
+        include/sorter.hpp
 
         PRIVATE
         ../libs/json.hpp # nlohamnn_json for config files
