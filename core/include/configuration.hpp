@@ -2,8 +2,8 @@
 // Created by george on 09.05.2026.
 //
 #pragma once
-#include "../../libs/json.hpp"
-#include "../include/exceptions.hpp"
+#include "json.hpp"
+#include "exceptions.hpp"
 #include <chrono>
 #include <fstream>
 
@@ -21,7 +21,7 @@ struct configuration {
     /**
      *
      * @param configuration_path Path to the zeros.json file
-     * @throws utils::configuration_error If something went wrong with the zeros.json file
+     * @throws utils::configuration_error If something went wrong with the config.json file
      */
     configuration(fs::path &&configuration_path);
 

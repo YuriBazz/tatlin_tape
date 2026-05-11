@@ -1,24 +1,9 @@
 cmake_minimum_required(VERSION 4.1)
 project(tatlin_tape_tests)
 
-add_executable(tatlin_tape_tests)
-target_sources(tatlin_tape_tests
-        PUBLIC
-        tests.cpp
-        PRIVATE
-        ../core/src/configuration.cpp
-        ../core/src/exceptions.cpp
-        ../core/src/tempfile.cpp
-        ../core/src/tape_processer.cpp
-        ../core/src/sorter.cpp
-        #############
-        ../core/include/tape_processer.hpp
-        ../core/include/configuration.hpp
-        ../core/include/exceptions.hpp
-        ../core/include/tempfile.hpp
-        ../core/include/sorter.hpp
-        ../libs/simple_test.h
-)
+add_executable(tatlin_tape_tests tests.cpp)
+target_link_libraries(tatlin_tape_tests PRIVATE tatlin_tape_core_lib)
+target_include_directories(tatlin_tape_tests PRIVATE ../libs)
 
 target_compile_definitions(tatlin_tape_tests
         PRIVATE

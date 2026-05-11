@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "../include/configuration.hpp"
-#include "../include/exceptions.hpp"
-#include "../include/sorter.hpp"
-#include "../include/tape_processer.hpp"
-#include "../include/tempfile.hpp"
+#include "configuration.hpp"
+#include "exceptions.hpp"
+#include "sorter.hpp"
+#include "tape_processer.hpp"
+#include "tempfile.hpp"

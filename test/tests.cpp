@@ -4,10 +4,10 @@
 #include <random>
 
 #include "../libs/simple_test.h"
-#include "../core/include/configuration.hpp"
-#include "../core/include/tape_processer.hpp"
-#include "../core/include/tempfile.hpp"
-#include "../core/include/sorter.hpp"
+#include "configuration.hpp"
+#include "tape_processer.hpp"
+#include "tempfile.hpp"
+#include "sorter.hpp"
 
 #ifdef NOT_SLEEPS
 #undef SLEEPS
@@ -362,30 +362,11 @@ TEST(Tape_processer, eof_could_not_be_condiiton) {
     utils::tape_processer dst(tmp);
     int val;
     std::ostringstream os_src;
-    while (!src.eof()) {
+    ASSERT_ANY_THROW(while (!src.eof()) {
         src.read(val);
         os_src << val;
         src.shift_forward();
-    }
-
-    src.rewind();
-
-    while (src.read(val)) {
-        dst.write(val);
-        src.shift_forward();
-        dst.shift_forward();
-    }
-    ASSERT_TRUE(src.eof());
-    dst.rewind();
-    ASSERT_FALSE(dst.eof());
-
-    std::ostringstream os_dst;
-    while (dst.read(val)) {
-        os_dst << val;
-        dst.shift_forward();
-    }
-    ASSERT_TRUE(dst.eof());
-    ASSERT_NE(os_dst.str(), os_src.str());
+    });
 }
 
 
@@ -455,6 +436,28 @@ TEST(Sorting, one_elem) {
     assert_tape_eq(read_all(dst), v);
 }
 
+TEST(Sorting, less_than_generic_ram) {
+    utils::tempfile t1, t2;
+    std::vector<int> v{1,5,2};
+    write_tape(t1, v);
+    utils::tape_processer src(t1), dst(t2);
+    utils::sorter::sort(src, dst);
+    std::sort(v.begin(), v.end());
+    dst.rewind();
+    assert_tape_eq(read_all(dst), v);
+}
+
+TEST(Sorting, greater_than_very_small_ram) {
+    utils::tempfile t1, t2;
+    utils::sorter::RAM_SIZE = 1;
+    std::vector<int> v{1,5,2,5,6,1,3,8,9};
+    write_tape(t1, v);
+    utils::tape_processer src(t1), dst(t2);
+    utils::sorter::sort(src, dst);
+    std::sort(v.begin(), v.end());
+    dst.rewind();
+    assert_tape_eq(read_all(dst), v);
+}
 
 #ifdef RANDOM_TEST
 // Тест со случайными значениями и примитивным бенчмарком. Выходит 1~3 секунды на пробег. Среднее не посчитал.

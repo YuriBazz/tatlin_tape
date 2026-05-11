@@ -7,7 +7,9 @@
 #include <fstream>
 
 namespace utils {
-
+/**
+ * @brief Varp for temporary files. Has only default ctor.
+ */
 class tempfile {
     std::filesystem::path path_;
 public:

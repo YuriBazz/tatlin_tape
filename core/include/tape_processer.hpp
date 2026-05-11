@@ -3,9 +3,9 @@
 //
 #pragma once
 #include <fstream>
-#include "../include/exceptions.hpp"
-#include "../include/configuration.hpp"
-#include "../include/sorter.hpp"
+#include "exceptions.hpp"
+#include "configuration.hpp"
+#include "sorter.hpp"
 #include <thread>
 
 namespace utils {
@@ -74,7 +74,15 @@ public:
     void rewind();
 
 
+    /**
+     * @brief Shifts cursor's position forward
+     * @throws std::runtime_error If tried to shift outside the file
+     */
     void shift_forward();
+    /**
+     * @brief Shifts cursor's position backward
+     * @throws std::runtime_error If tried to shift outside the file
+     */
     void shift_backward();
 
 };

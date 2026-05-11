@@ -2,7 +2,8 @@
 // Created by george on 10.05.2026.
 //
 
-#include "../include/tape_processer.hpp"
+#include "tape_processer.hpp"
+
 void utils::tape_processer::swap(tape_processer& other) noexcept {
     std::swap(tape_file_, other.tape_file_);
 }
@@ -10,10 +11,11 @@ void utils::tape_processer::swap(tape_processer& other) noexcept {
 
 utils::tape_processer::tape_processer(const fs::path& tape_path) {
     if (!fs::exists(tape_path)) {
-        std::fstream creating(tape_path, std::ios::out);
         // потому что по умолчанию оно вроде как не создается, что странно
+        tape_file_ = std::fstream(tape_path, std::ios::out);
+        tape_file_.close();
     }
-    tape_file_ = std::fstream(tape_path, std::ios::in | std::ios::out | std::ios::binary);
+    tape_file_.open(tape_path, std::ios::in | std::ios::out | std::ios::binary);
     if (!tape_file_.is_open()) throw std::runtime_error("Could not open the file");
 }
 
@@ -72,6 +74,8 @@ void utils::tape_processer::shift_forward() {
     std::this_thread::sleep_for(global_configuration.shift_delay);
 #endif
     tape_file_.seekp(offset, std::ios_base::cur);
+    if (tape_file_.fail())
+        throw std::runtime_error("IndexOutOfRangeException");
     //TODO: По-хорошему, тут бы сделать итератор
 }
 
@@ -81,5 +85,5 @@ void utils::tape_processer::shift_backward() {
 #endif
     tape_file_.seekp(-offset, std::ios_base::cur);
     if (tape_file_.fail())
-        throw std::runtime_error("ну вышел за пределы файлика.");
+        throw std::runtime_error("IndexOutOfRangeException");
 }

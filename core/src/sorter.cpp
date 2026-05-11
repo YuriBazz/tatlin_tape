@@ -2,7 +2,7 @@
 // Created by george on 10.05.2026.
 //
 
-#include "../include/sorter.hpp"
+#include "sorter.hpp"
 
 void utils::sorter::sort(tp& f1, tp& f2, tp& f3) {
     ram mem;
@@ -13,7 +13,7 @@ void utils::sorter::sort(tp& f1, tp& f2, tp& f3) {
 
     size_t bucket_size = RAM_SIZE;
 
-    while (total_f2 > 0 && total_f3 > 0) {
+    while ((total_f2 > 0 && total_f3 > 0) || bucket_size == RAM_SIZE /* at least one run*/) {
         merge_buckets(f1, f2, f3, bucket_size, total_f2, total_f3);
         bucket_size *= 2;
         process_with_counts(f1, f2, f3, mem, bucket_size / RAM_SIZE, total_f2, total_f3);
@@ -24,7 +24,7 @@ void utils::sorter::sort(tp& f1, tp& f2, tp& f3) {
 void utils::sorter::process_with_counts(tp& f1, tp& f2, tp& f3, ram& mem, size_t count, size_t& total2, size_t& total3) {
     f1.rewind(); f2.rewind(); f3.rewind();
     total2 = 0; total3 = 0;
-    int cur_file = 1;
+    int cur_file = 0;
     int val;
     size_t buckets_in_cur = 0;
 
@@ -81,7 +81,10 @@ void utils::sorter::sort(tp& src, tp& dst) {
     tp f2(t1), f3(t2);
     int val;
     while (src.read(val)) dst.write(val), dst.shift_forward(), src.shift_forward();
+    dst.rewind();
     sort(dst, f2,f3);
+    src.rewind();
+    dst.rewind();
 }
 
 void utils::sorter::sort(const std::string& src, const std::string& dst) {

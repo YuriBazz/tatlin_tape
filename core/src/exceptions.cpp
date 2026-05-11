@@ -1,7 +1,7 @@
 //
 // Created by george on 09.05.2026.
 //
-#include "../include/exceptions.hpp"
+#include "exceptions.hpp"
 utils::configuration_error::configuration_error(const std::string &what) :info(what)  {}
 
 const char* utils::configuration_error::what() const noexcept {
