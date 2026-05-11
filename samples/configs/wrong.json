@@ -1,0 +1,6 @@
+{
+  "reading_delay" : 0,
+  "writing_delay" : "and who is the genius which decided that putting string into \"*_delay\" field is a good idea?",
+  "shift_delay" : 0,
+  "rewind_delay" : 0
+}

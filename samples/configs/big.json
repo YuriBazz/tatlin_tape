@@ -1,0 +1,11 @@
+{
+  "reading_delay" : 0,
+  "writing_delay" : 0,
+  "shift_delay" : 0,
+  "rewind_delay" : 0,
+  "some" : "test",
+  "other" : "tset",
+  "maybe" : "i'll be happy",
+  "billy" : "joel",
+  "and-some-number" : 42
+}
