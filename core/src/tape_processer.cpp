@@ -12,7 +12,7 @@ void utils::tape_processer::swap(tape_processer& other) noexcept {
 utils::tape_processer::tape_processer(const fs::path& tape_path) {
     if (!fs::exists(tape_path)) {
         // потому что по умолчанию оно вроде как не создается, что странно
-        tape_file_ = std::fstream(tape_path, std::ios::out);
+        tape_file_.open(tape_path, std::ios::out);
         tape_file_.close();
     }
     tape_file_.open(tape_path, std::ios::in | std::ios::out | std::ios::binary);
