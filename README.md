@@ -2,7 +2,7 @@
 Тестовое задание для yadro impulse в команду tatlin.datapath
 
 # Stack
-``C++ 23`` ``g++ 15`` ``cmake >= 4.1``
+``C++ 23`` ``g++ 15`` ``cmake >= 4.1`` ``make 4.4.1``
 
 # Build
 ```bash
